@@ -1,7 +1,4 @@
 """Modelo puente que guarda el progreso del usuario."""
-
-from __future__ import annotations
-
 from datetime import datetime
 
 from src.extensions import db

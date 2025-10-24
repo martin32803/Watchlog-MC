@@ -1,21 +1,25 @@
 """Endpoints relacionados con peliculas."""
-
-from __future__ import annotations
-
 from flask import Blueprint, jsonify, request
 
 bp = Blueprint("movies", __name__, url_prefix="/movies")
-
 
 class MovieService:
     """Orquesta la logica de negocio para el recurso Movie."""
 
     # TODO: inyectar dependencias necesarias (db.session, modelos, esquemas, etc.).
+    def __init__(self):
+        from src.models.movie import Movie  # noqa: F401
+        self.Movie = Movie
 
     def list_movies(self) -> list[dict]:
         """Retorna todas las peliculas registradas."""
-        # TODO: consultar la base de datos y serializar a una lista de dicts.
-        pass
+        movies = self.Movie.query.all()
+        movie_list = []
+
+        for movie in movies:
+            movie_list.append(movie.to_dict())
+
+        return jsonify(movie_list)
 
     def create_movie(self, payload: dict) -> dict:
         """Crea una nueva pelicula."""
@@ -44,8 +48,7 @@ service = MovieService()
 @bp.get("/")
 def list_movies():
     """Lista todas las peliculas disponibles."""
-    # TODO: invocar service.list_movies y devolver la respuesta serializada.
-    return jsonify({"detail": "TODO: implementar listado de peliculas"}), 501
+    return service.list_movies(), 501
 
 
 @bp.post("/")
