@@ -1,7 +1,4 @@
 """Endpoints para controlar el progreso de los usuarios."""
-
-from __future__ import annotations
-
 from flask import Blueprint, jsonify, request
 
 bp = Blueprint("progress", __name__, url_prefix="")

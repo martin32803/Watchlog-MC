@@ -54,6 +54,7 @@ venv\Scripts\activate  # Windows
 pip install -r requirements.txt
 
 # Crear base de datos (una vez configurados los modelos)
+mkdir instance
 flask db init
 flask db migrate -m "init"
 flask db upgrade

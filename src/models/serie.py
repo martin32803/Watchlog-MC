@@ -1,23 +1,27 @@
 """Modelo para series disponibles en el catalogo."""
-
-from __future__ import annotations
-
-from datetime import datetime
+from datetime import datetime as dt, timezone as t
 
 from src.extensions import db
+from sqlalchemy.orm import Mapped, mapped_column
+from typing import List
+from models.season import Season
 
-
-class Series(db.Model):
+class Serie(db.Model):
     """Representa una serie cargada por los usuarios."""
 
-    __tablename__ = "series"
+    __tablename__ = "serie"
 
-    # TODO: definir columnas (id, title, total_seasons, created_at, updated_at).
-    # TODO: agregar columnas opcionales (synopsis, genres, image_url) si se desean.
-
+    id: Mapped[int] = mapped_column(primary_key=True)
+    title: Mapped[str] = mapped_column(db.String(255), nullable=False)
+    created_at: Mapped[dt] = mapped_column(default=dt.now(t.utc), nullable=False)
+    updated_at: Mapped[dt] = mapped_column(
+        default=dt.now(t.utc),
+        onupdate=dt.now(t.utc),
+        nullable=False,
+    )
+    
     # TODO: configurar relacion con Season (one-to-many) y WatchEntry.
-    # seasons = db.relationship("Season", back_populates="series", lazy="joined")
-
+    seasons: Mapped[List['Season']] = db.relationship()
     def __repr__(self) -> str:
         """Devuelve una representacion legible del modelo."""
         return f"<Series id={getattr(self, 'id', None)} title={getattr(self, 'title', None)}>"
@@ -29,7 +33,7 @@ class Series(db.Model):
             "id": getattr(self, "id", None),
             "title": getattr(self, "title", None),
             "total_seasons": getattr(self, "total_seasons", None),
-            "created_at": getattr(self, "created_at", datetime.utcnow()),
+            "created_at": getattr(self, "created_at", dt.now(t.utc)),
         }
         if include_seasons:
             # TODO: serializar temporadas reales en lugar de lista vacia.
