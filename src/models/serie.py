@@ -4,7 +4,12 @@ from datetime import datetime as dt, timezone as t
 from src.extensions import db
 from sqlalchemy.orm import Mapped, mapped_column
 from typing import List
-from models.season import Season
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .season import Season
+    from .watch_entry import WatchEntry  # Importar WatchEntry para la relacion
 
 class Serie(db.Model):
     """Representa una serie cargada por los usuarios."""
@@ -22,6 +27,13 @@ class Serie(db.Model):
     
     # TODO: configurar relacion con Season (one-to-many) y WatchEntry.
     seasons: Mapped[List['Season']] = db.relationship()
+
+    watch_entries: Mapped[List['WatchEntry']] = db.relationship(
+        "WatchEntry",
+        cascade="all, delete-orphan",
+        back_populates="serie",
+        lazy='select'
+    )  # Relacion con WatchEntry (definida en WatchEntry)
     def __repr__(self) -> str:
         """Devuelve una representacion legible del modelo."""
         return f"<Series id={getattr(self, 'id', None)} title={getattr(self, 'title', None)}>"
