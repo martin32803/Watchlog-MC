@@ -9,7 +9,7 @@ bp = Blueprint("movies", __name__, url_prefix="/movies")
 class MovieService:
     """Orquesta la logica de negocio para el recurso Movie."""
 
-    # ✅ TODO: inyectar dependencias necesarias (db.session, modelos, esquemas, etc.).
+    # TODO: inyectar dependencias necesarias (db.session, modelos, esquemas, etc.).
     def __init__(self):
         from src.models.movie import Movie
         self.Movie = Movie
@@ -23,7 +23,7 @@ class MovieService:
 
     def create_movie(self, payload: dict):
         """Crea una nueva pelicula."""
-        # ✅ TODO: validar el payload y persistir un nuevo registro Movie.
+        # TODO: validar el payload y persistir un nuevo registro Movie.
         required_fields = ["title", "genre", "release_year"]
 
         # Validación básica
@@ -44,7 +44,7 @@ class MovieService:
 
     def get_movie(self, movie_id: int):
         """Obtiene una pelicula por su identificador."""
-        # ✅ TODO: buscar la pelicula y manejar el caso de no encontrada.
+        # TODO: buscar la pelicula y manejar el caso de no encontrada.
         movie = self.Movie.query.get(movie_id)
         if not movie:
             raise NotFound(f"No se encontró la película con id {movie_id}")
@@ -52,7 +52,7 @@ class MovieService:
 
     def update_movie(self, movie_id: int, payload: dict):
         """Actualiza los datos de una pelicula."""
-        # ✅ TODO: aplicar cambios permitidos y guardar en la base de datos.
+        # TODO: aplicar cambios permitidos y guardar en la base de datos.
         movie = self.Movie.query.get(movie_id)
         if not movie:
             raise NotFound(f"No se encontró la película con id {movie_id}")
@@ -67,7 +67,7 @@ class MovieService:
 
     def delete_movie(self, movie_id: int):
         """Elimina una pelicula existente."""
-        # ✅ TODO: definir si el borrado debe ser logico o fisico.
+        # TODO: definir si el borrado debe ser logico o fisico.
         # Implementaremos borrado físico
         movie = self.Movie.query.get(movie_id)
         if not movie:

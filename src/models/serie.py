@@ -26,7 +26,7 @@ class Serie(db.Model):
         nullable=False,
     )
 
-    # ✅ TODO: configurar relacion con Season (one-to-many) y WatchEntry.
+    # TODO: configurar relacion con Season (one-to-many) y WatchEntry.
     seasons: Mapped[List['Season']] = db.relationship(
         "Season",
         cascade="all, delete-orphan",
@@ -47,7 +47,7 @@ class Serie(db.Model):
 
     def to_dict(self, include_seasons: bool = False) -> dict:
         """Serializa la serie y opcionalmente sus temporadas."""
-        # ✅ TODO: reemplazar por serializacion real usando marshmallow o similar.
+        # TODO: reemplazar por serializacion real usando marshmallow o similar.
         # Aquí se usa serialización manual con control opcional.
         data = {
             "id": getattr(self, "id", None),
@@ -58,7 +58,7 @@ class Serie(db.Model):
         }
 
         if include_seasons:
-            # ✅ TODO: serializar temporadas reales en lugar de lista vacia.
+            # TODO: serializar temporadas reales en lugar de lista vacia.
             data["seasons"] = [
                 {
                     "id": s.id,

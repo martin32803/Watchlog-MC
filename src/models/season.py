@@ -14,12 +14,12 @@ class Season(db.Model):
     number: Mapped[int] = mapped_column(nullable=False)  # numero de la temporada
     episodes_count: Mapped[int] = mapped_column(nullable=False, default=0)  # cantidad de episodios en la temporada
 
-    # ✅ TODO: establecer restriccion unica por (series_id, number).
+    # TODO: establecer restriccion unica por (series_id, number).
     __table_args__ = (
         UniqueConstraint("series_id", "number", name="uq_series_number"),
     )
 
-    # ✅ TODO: configurar relacion back_populates con Series.
+    # TODO: configurar relacion back_populates con Series.
     # series = db.relationship("Series", back_populates="seasons")
     series = db.relationship("Serie", back_populates="seasons")
 
@@ -29,7 +29,7 @@ class Season(db.Model):
 
     def to_dict(self) -> dict:
         """Serializa la temporada en un diccionario."""
-        # ✅ TODO: reemplazar esta implementacion por la serializacion real.
+        # TODO: reemplazar esta implementacion por la serializacion real.
         return {
             "id": getattr(self, "id", None),
             "series_id": getattr(self, "series_id", None),

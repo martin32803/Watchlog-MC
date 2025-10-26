@@ -21,7 +21,7 @@ class User(db.Model):
     email: Mapped[str] = mapped_column(db.String(120), nullable=True)  # email del usuario
     created_at: Mapped[datetime] = mapped_column(default=datetime.now(ts.utc))  # fecha de creacion
 
-    # ✅ Relacion con WatchEntry (definida en WatchEntry)
+    # Relacion con WatchEntry (definida en WatchEntry)
     watch_entries: Mapped[list["WatchEntry"]] = db.relationship(
         "WatchEntry",
         cascade="all, delete-orphan",

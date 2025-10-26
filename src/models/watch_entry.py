@@ -15,7 +15,7 @@ class WatchEntry(db.Model):
 
     __tablename__ = "watch_entries"
 
-    # ✅ TODO: definir columnas basicas (id, user_id, content_type, content_id, status).
+    # TODO: definir columnas basicas (id, user_id, content_type, content_id, status).
     id: Mapped[int] = mapped_column(primary_key=True)  # id de la entrada
     content_type: Mapped[str] = mapped_column(db.String(20), nullable=False)  # tipo de contenido: 'movie' o 'serie'
     content_id: Mapped[int] = mapped_column(nullable=False)  # id del contenido (pelicula o serie)
@@ -25,7 +25,7 @@ class WatchEntry(db.Model):
         default="watching"
     )  # estado: 'watching', 'completed', 'on-hold', 'dropped', 'plan-to-watch'
 
-    # ✅ TODO: agregar columnas de progreso (current_season, current_episode, watched_episodes, total_episodes).
+    # TODO: agregar columnas de progreso (current_season, current_episode, watched_episodes, total_episodes).
     current_season: Mapped[Optional[int]] = mapped_column(nullable=True)  # temporada actual (para series)
     current_episode: Mapped[Optional[int]] = mapped_column(nullable=True)  # episodio actual (para series)
     watched_episodes: Mapped[Optional[int]] = mapped_column(nullable=True, default=0)  # episodios vistos (para series)
@@ -73,7 +73,7 @@ class WatchEntry(db.Model):
 
     def to_dict(self) -> dict:
         """Serializa la entrada para respuestas JSON."""
-        # ✅ TODO: reemplazar con serializacion acorde al modelo final.
+        # TODO: reemplazar con serializacion acorde al modelo final.
         base_data = {
             "id": getattr(self, "id", None),
             "user_id": getattr(self, "user_id", None),

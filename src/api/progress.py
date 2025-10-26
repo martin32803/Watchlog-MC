@@ -9,7 +9,7 @@ bp = Blueprint("progress", __name__, url_prefix="")
 class ProgressService:
     """Coordina operaciones sobre la lista de seguimiento y progreso."""
 
-    # ✅ TODO: inyectar modelos User, Series, Movie y WatchEntry con sus esquemas.
+    # TODO: inyectar modelos User, Series, Movie y WatchEntry con sus esquemas.
     def __init__(self):
         from src.models.user import User
         from src.models.movie import Movie
@@ -24,7 +24,7 @@ class ProgressService:
 
     def list_watchlist(self, user_id: int) -> list[dict]:
         """Devuelve los contenidos asociados a un usuario."""
-        # ✅ TODO: consultar entradas filtradas por user_id y calcular porcentajes.
+        # TODO: consultar entradas filtradas por user_id y calcular porcentajes.
         user = self.User.query.get(user_id)
         if not user:
             raise NotFound(f"Usuario con id {user_id} no encontrado.")
@@ -35,7 +35,7 @@ class ProgressService:
 
     def add_movie(self, user_id: int, movie_id: int) -> dict:
         """Agrega una pelicula a la lista del usuario."""
-        # ✅ TODO: validar existencia del usuario y pelicula antes de crear el registro.
+        # TODO: validar existencia del usuario y pelicula antes de crear el registro.
         user = self.User.query.get(user_id)
         if not user:
             raise NotFound(f"Usuario con id {user_id} no encontrado.")
@@ -63,7 +63,7 @@ class ProgressService:
 
     def add_series(self, user_id: int, series_id: int) -> dict:
         """Agrega una serie a la lista del usuario."""
-        # ✅ TODO: crear WatchEntry inicial con temporadas/episodios en cero.
+        # TODO: crear WatchEntry inicial con temporadas/episodios en cero.
         user = self.User.query.get(user_id)
         if not user:
             raise NotFound(f"Usuario con id {user_id} no encontrado.")
@@ -94,7 +94,7 @@ class ProgressService:
 
     def update_series_progress(self, user_id: int, series_id: int, payload: dict) -> dict:
         """Actualiza el progreso de una serie en la lista del usuario."""
-        # ✅ TODO: validar limites de temporadas y episodios, recalcular porcentaje.
+        # TODO: validar limites de temporadas y episodios, recalcular porcentaje.
         entry = self.WatchEntry.query.filter_by(
             user_id=user_id, content_type="serie", content_id=series_id
         ).first()
@@ -136,7 +136,7 @@ service = ProgressService()
 def get_my_watchlist():
     """Devuelve la lista de seguimiento del usuario actual."""
     user_id = request.headers.get("X-User-Id", type=int)
-    # ✅ TODO: validar el header y manejar autenticacion simulada.
+    # TODO: validar el header y manejar autenticacion simulada.
     if not user_id:
         return jsonify({"error": "Falta el encabezado X-User-Id"}), 401
 
@@ -152,7 +152,7 @@ def get_my_watchlist():
 def add_movie_to_watchlist(movie_id: int):
     """Agrega una pelicula a la lista del usuario."""
     user_id = request.headers.get("X-User-Id", type=int)
-    # ✅ TODO: invocar service.add_movie y devolver 201 con la entrada creada.
+    # TODO: invocar service.add_movie y devolver 201 con la entrada creada.
     if not user_id:
         return jsonify({"error": "Falta el encabezado X-User-Id"}), 401
 
@@ -168,7 +168,7 @@ def add_movie_to_watchlist(movie_id: int):
 def add_series_to_watchlist(series_id: int):
     """Agrega una serie a la lista del usuario."""
     user_id = request.headers.get("X-User-Id", type=int)
-    # ✅ TODO: invocar service.add_series y devolver 201 con la entrada creada.
+    # TODO: invocar service.add_series y devolver 201 con la entrada creada.
     if not user_id:
         return jsonify({"error": "Falta el encabezado X-User-Id"}), 401
 
@@ -186,7 +186,7 @@ def update_series_progress(series_id: int):
     user_id = request.headers.get("X-User-Id", type=int)
     payload = request.get_json(silent=True) or {}
 
-    # ✅ TODO: invocar service.update_series_progress y devolver el recurso actualizado.
+    # TODO: invocar service.update_series_progress y devolver el recurso actualizado.
     if not user_id:
         return jsonify({"error": "Falta el encabezado X-User-Id"}), 401
 
